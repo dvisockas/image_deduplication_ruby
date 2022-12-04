@@ -27,11 +27,7 @@ module NeuralNet
   end
 end
 
-class Image
-  def initialize(source_path)
-    @source_path = source_path
-  end
-
+class Image < Struct.new(:source_path)
   def embeddings
     Numo::SFloat.cast(
       NeuralNet
@@ -46,7 +42,7 @@ class Image
   end
 
   def torch_input
-    transforms.call(Vips::Image.new_from_file(@source_path)).unsqueeze(0)
+    transforms.call(Vips::Image.new_from_file(source_path)).unsqueeze(0)
   end
 end
 
